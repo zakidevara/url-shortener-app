@@ -32,11 +32,18 @@ public class UrlShortenerController {
   @PostMapping("/shorten")
   public ResponseEntity<String> shortenUrl(@RequestBody Map<String, String> request) {
     String originalUrl = request.get("url");
+    boolean useV2 = Boolean.parseBoolean(request.getOrDefault("useV2", "false"));
     if (originalUrl == null || originalUrl.isEmpty()) {
       return ResponseEntity.badRequest().body("Invalid URL");
     }
 
-    return ResponseEntity.ok(urlShortenerService.shortenUrl(originalUrl).trim());
+    String shortenedUrl =
+        useV2
+            ? urlShortenerService.shortenUrlV2(originalUrl)
+            : urlShortenerService.shortenUrl(originalUrl);
+    return shortenedUrl != null
+        ? ResponseEntity.ok(shortenedUrl)
+        : ResponseEntity.status(500).body("Error shortening URL");
   }
 
   /**

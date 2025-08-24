@@ -21,7 +21,7 @@ The application uses a Base62 encoding scheme to generate short codes for long U
    ```bash
    curl -s -X POST http://localhost:8080/shorten \
    -H "Content-Type: application/json" \
-   -d '{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}' 
+   -d '{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "useV2": true}' 
    ```
 7. To access the original URL, navigate to `http://localhost:8080/{shortCode}` in your browser, replacing `{shortCode}` with the shortened URL code received from the previous step.
   
